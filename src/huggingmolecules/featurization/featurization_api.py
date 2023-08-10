@@ -2,6 +2,7 @@ from typing import Generic, List, Optional, Type
 from typing import TypeVar
 
 import torch
+import tqdm
 from torch.utils.data import DataLoader
 
 from ..configuration.configuration_api import PretrainedConfigMixin
@@ -36,7 +37,8 @@ class PretrainedFeaturizerMixin(Generic[T_MoleculeEncoding, T_BatchEncoding, T_C
         if y_list is not None:
             assert len(smiles_list) == len(y_list)
         y_list = y_list if y_list is not None else (None for _ in smiles_list)
-        for smiles, y in zip(smiles_list, y_list):
+        for smiles, y in tqdm.tqdm(zip(smiles_list, y_list), 
+            desc="Encoding SMILES", total=len(smiles_list)):
             encodings.append(self._encode_smiles(smiles, y))
         return encodings
 
