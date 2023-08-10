@@ -92,7 +92,9 @@ def get_mol_from_smiles(smiles: str) -> Mol:
     mol = MolFromSmiles(smiles)
     try:
         mol = Chem.AddHs(mol)
-        AllChem.EmbedMolecule(mol, maxAttempts=10)
+        success = AllChem.EmbedMolecule(mol, maxAttempts=50)
+        if success != 0:
+            raise ValueError
         AllChem.UFFOptimizeMolecule(mol)
         mol = Chem.RemoveHs(mol)
     except ValueError:
