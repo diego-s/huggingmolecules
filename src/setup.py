@@ -19,7 +19,7 @@ __version__ = version_matches.group(1)
 setup(
     name='huggingmolecules',
     version=__version__,
-    packages=['huggingmolecules'],
+    package_dir={ "huggingmolecules" : "huggingmolecules" },
     install_requires=[
         'torch>=1.7.0',
         'scikit-learn>=0.23.2',
