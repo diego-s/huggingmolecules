@@ -44,7 +44,7 @@ class PretrainedFeaturizerMixin(Generic[T_MoleculeEncoding, T_BatchEncoding, T_C
 
     def get_data_loader(self, dataset: List[T_MoleculeEncoding], *, batch_size: int, shuffle: bool = False,
                         num_workers: int = 0) -> DataLoader:
-        return DataLoader(dataset, batch_size,
+        return DataLoader(dataset, batch_size=batch_size,
                           collate_fn=self._collate_encodings,
                           num_workers=num_workers,
                           shuffle=shuffle)
